@@ -1,0 +1,108 @@
+# Ejemplo de archivo de configuración para craw_catalogs.sh
+#
+# Contiene las fuentes (Z39.50 targets) en las que se van a buscar datos 
+# de los libros a partir de sus ISBN.
+#
+# CONTENIDO
+# =========
+# Contiene los siguientes datos separados por whitespace
+#
+#   1. IdFuente    - Cadena corta de caracteres con la que identificaremos la
+#                    fuente en los archivos de salida.
+#   2. url-port-db - Datos de conexión: nombre_servidor:puerto[/database]
+#                    [] indica que /database es opcional en algunos servidores
+#   3. format      - Descriptor de formato para Z39.50
+#   4. charset     - Juego de caracteres de recuperación 
+#   5. auth        - String de autenticación (usuario/password) si la fuente 
+#                    lo requiere o un guión en caso contrario.
+#   6. conv        - Indica si hay que realizar conversión de los registros 
+#                    MARC del formato solicitado a utf-8. Esto es necesario 
+#                    para fuentes como REBECA o REBIUN que o no devuelven UTF-8 
+#                    o lo hacen sin el indicadore de unicode ('a') en la posición 
+#                    9. Si se desea mantener el juego de caracteres origen, poner 
+#                    'N' o 'n' o '-'. Para que se realice la conversión por 'Y', 
+#                    'y', 'S' o 's'. Otro valor  avisa como error. Un caso especial
+#                    es, por ejemplo BNF, donce charset=utf-8 pero se indica 'Y'
+#                    para poner el indicador UNICODE que no viene en el registro.
+#
+#
+#
+# FUENTES EN ESTE EJEMPLO
+# =======================
+
+#   
+# Id   Catalogo                                         Notas  URL
+# ---  ------------------------------------------------ -----  ------------------------
+# bne  Biblioteca Nacional de España                           https://www.bne.es/es/servicios/servicios-para-bibliotecarios/suministro-registros/descarga-z3950
+# bli  British Library                                   1,8   https://www.bl.uk/help/get-marc-21-data
+# reb  REBECA                                                  https://www.culturaydeporte.gob.es/cultura/areas/bibliotecas/mc/rebeca/descargar-registros.html
+# bnf  Bibliothèque Nationale De France                  2,3,4 https://www.bnf.fr/fr/serveur-z3950-catalogue-general-de-la-bnf
+# rbu  Red Bibliotecas Universitarias Españolas (REBIUN) 4,5   https://www.rebiun.org/
+# gbv  Gemeinsamen Bibliotheksverbund (GBV)                    https://en.gbv.de/
+# gvq  Gemeinsamen Bibliotheksverbund (GBV) (ver nota)   6     https://en.gbv.de/
+# loc  Library Of Congress Catalog                       7     https://catalog.loc.gov/
+# nla  National Library of Australia                           https://www.nla.gov.au/apps/libraries/?action=ZSvcDetails&zsid=28191&orgid=9735
+# pus  Universidad Pontifica de la Santa Cruz                  https://es.pusc.it/bib/PUSC_Z39-50.html
+# bnl  Bibliothèque nationale du Luxembourg                    https://data.bnl.lu/apis/z39-50/
+# sbn  Servizio Bibliotecario Nazionale                        https://opac.sbn.it/accesso-z39.50-a-opac-sbn
+#
+# NOTAS
+# ====
+# 1. Requiere un usuario y una contraseña que se debe solicitar a metadata@bl.u
+#    indicando que se aceptan los términos y condiciones expresados en la página
+#    https://www.bl.uk/about-us/terms-and-conditions/marc-21-free-data-service 
+#    y proporcionando el nombre de la institución que los solicita. 
+#    
+# 2. Requiere un usuario y una contraseña pero son fijos para todos los usuarios
+#    (ver configuración abajo)
+#    
+# 3. El código de formato de la Bibliothèque Nationale De France es diferente,
+#    usa UNIMARC, no admite MARC21. Esto introduce peculiaridades en la forma
+#    de extraer la informaciíón de los registros (ver marc2abies.awk). 
+#    
+# 4. Aunque servidores como REBECA o BNF no admiten la opción utf8 para la 
+#    codificación de los datos recuperados, algunas utilidades, como por 
+#    ejemplo la utilidad marc2excel_cli.py no funcionan si el registro 
+#    de cabecera del formato MARC 21 no lleva el indicador 'a' indicando 
+#    UNICODE. Se debe recuperar en iso-8859-1 y convertir usando
+#    
+#      yaz-marcdump -i marc -o marc -f iso-8859-1 -t utf8 -l 9=97 
+#
+#    Además algunos (REBIUN, Servizio Bibliotecario Nzionalle) no devuelven
+#    diacríticos. 
+#
+# 5. La calidad de la información de REBIUN es pésima. Los datos vienen sin
+#    caracteres nacionales (aparentemente usan ASCII 7). Como está configurado
+#    funciona, pero mejor dejarla al final como último recurso. #
+#    
+# 6. Para la Gemeinsamen Bibliotheksverbund se utiliza el servidor que
+#    se especifica arriba. También está disponible z3950.gbv.de:210/gvk,
+#    pero una página recomienda utilizar el que está configurado a partir
+#    de 2021. Sin embargo, la información de este último parece algo menos
+#    completa.
+#    
+# 7. Library Of Congress limita las peticiones por minuto, y bloquea el
+#    acceso durante cierto tiempo, por lo que conviene ponerla al final
+#    para limitar los accesos. Ver:
+#      https://guides.loc.gov/digital-scholarship/faq, 
+#      https://www.loc.gov/legal/
+#    
+# 8. Bitish Library: Database name: ZBLACU or BNB03U depending on whether 
+#    you want the Integrated Catalogue or    the British National Bibliography.
+#    
+#
+
+#id open                                                     format  encoding   authentication   TRASNFORM
+#-- -------------------------------------------------------  ------- --------   --------------   ---------
+bne sigb.bne.es:2200                                         marc21  utf8       -                    -
+reb catalogos.mecd.es:220/ABNET_REBECA                       marc21  iso-8859-1 -                    Y
+bli z3950cat.bl.uk:9909/ZBLACU                               marc21  utf8       usr/pw (ejemplo)     -
+bnf z3950.bnf.fr:2211/TOUT-UTF8                              UNIMARC utf8       Z3950/Z3950_BNF      Y
+gvk z3950.k10plus.de:210/gvk                                 marc21  utf8       -                    -
+gvq z3950.gbv.de:210/gvk                                     marc21  utf8       -                    -
+loc lx2.loc.gov:210/LCDB                                     marc21  utf8       -                    -
+rbu REBIUN.crue.org:210/ABSYSREBIUN                          marc21  utf8       -                    Y
+pus catalogo.pusc.it:22210/biblios                           marc21  utf8       -                    - 
+nla catalogue.nla.gov.au:7090/voyager                        marc21  utf8       -                    -
+bnl bibnet.alma.exlibrisgroup.com:1921/352LUX_BIBNET_NETWORK usmarc  utf8       -                    -
+sbn opac.sbn.it:3950/NOPAC                                   marc21  utf8       -                    -

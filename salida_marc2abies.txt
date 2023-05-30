@@ -1,0 +1,29 @@
+
+==================================================================================
+- 1 - Concatenando 21 archivos MARC en TODOS.mrc
+----------------------------------------------------------------------------------
+- 1 - FIN. 21 registros,  27657 bytes
+
+==================================================================================
+- 2 - Creando TODOS.xlsx con registros MARC21
+----------------------------------------------------------------------------------
+Running MARC to Excel conversion
+
+Processing: archivos_procesados/TODOS.mrc
+Writing Excel data: 100%|████████████████████████████████████████████████████████████| 22/22 [00:00<00:00, 284.56rows/s]
+Saved: archivos_procesados/TODOS.xlsx
+Finished
+- 3 - FIN.  36730  bytes
+
+==================================================================================
+3. Conversión de TODOS.xlsx  a TODOS.txt
+----------------------------------------------------------------------------------
+XLSX:  archivos_procesados/TODOS.xlsx
+TEXT:  archivos_procesados/TODOS.txt
+- 3 - FIN. 22 líneas (incluyendo cabecera), 26903 bytes
+
+==================================================================================
+4. Generar archivos abies-temp.txt y  abies-utf8.txt  con datos para ABIES
+----------------------------------------------------------------------------------
+ERROR: Faltan archivos. Debe proporcionar archivo_log y archivo_marc.
+- 4 - FIN. 22 líneas,  26903 bytes

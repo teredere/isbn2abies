@@ -1,0 +1,27 @@
+BEGIN  2023/05/30 20:34:35
+1: 2-85088-227-5  bne,reb,bli,bnf:1 found
+2: 88-202-0710-9  bne,reb,bli:1 found
+3: 0-88740-124-4  bne,reb,bli:1 found
+4: 0112904173  bne,reb,bli:1 found
+5: 1851490752  bne,reb,bli:1 found
+6: 88-85282-76-8  bne,reb,bli,bnf,gvk,gvq,loc:2 found
+7: 84-934190-1-X  bne,reb:1 found
+8: 84-369-3604-3  bne:1 found
+9: 9788436829259  bne:1 found
+10: 9788483567579  bne:1 found
+11: 84-309-4183-5  bne:1 found
+12: 84-369-1201-2  bne:1 found
+13: 84-294-4578-1  bne:1 found
+14: 84-236-3837-5  bne:1 found
+15: 9782878441864  bne,reb,bli,bnf:1 found
+16: 84-95146-95-9  bne:1 found
+17: 2-911167-04-X  bne,reb,bli,bnf:1 found
+18: 488-15561-1-8  bne,reb,bli,bnf,gvk,gvq,loc,rbu,pus,nla,bnl,sbn<UNEXPECTED ERROR>, *FAIL*
+19: 978-90-6153-864-6  bne,reb,bli:1 found
+20: 2-8264-0080-0  bne,reb,bli,bnf,gvk,gvq,loc:2 found
+21: 84-8156-113-4  bne,reb:1 found
+22: 978-84-8480-221-1  bne:1 found
+END  2023/05/30 20:36:12
+Buscadas    23  referencias en 97.494 s (.235 refs/s)
+Encontradas 21 (91.304%), no encontradas 2
+se han producido 1 errores no esperados en conexión Z39.50

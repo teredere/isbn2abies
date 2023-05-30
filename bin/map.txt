@@ -1,0 +1,25 @@
+IdEjemplar              |Número secuencial generado
+Fecha1Info              |[008] (8-11)  / [100 ## $a] (1-4)
+Fecha2Info              |[008] (12-15) (si dispobible)
+ISBN                    |[020 ## $a]   / [010 ## $a]
+DepositoLegal           |[017 ## $a]
+Autor                   |[100 11 $a] [100 00 $a] [100 01 $a] [700 11 $a] [245 11 $c] [245 00 $c] / [200 11 $f]
+Titulo                  |[245 nn $a] / [200 11 $a]
+Subtitulo               |[245 bb $b]
+Edicion                 |[250 ## $a]
+LugarEdicion            |[260 ## $a] / [210 zz $a]
+Editorial               |[260 ## $b] / [210 ## $c]
+AnoEdicion              |[260 ## $c] / [210 ## $d]
+Extension               |[300 ## $a] / [215 ## $a]
+CaracteristicasFisicas  |[300 ## $b]
+Dimensiones             |[300 ## $c] / [215 ## $d]
+NumeroSerie             |[490 nn $v]
+NumeroSerie             |
+Serie                   |[490 nn $a]
+Notas                   |[500 ## $a] [501 ## $a] [504 ## $a] [505 nn $a]
+CDU                     |Del archivo de entrada
+Ubicacion               |Del archivo de entrada
+Sig1                    |Generado por la aplicación
+Sig2                    |Generado por la aplicación
+Sig3                    |Generado por la aplicación
+Signatura               |Generado por la aplicación

@@ -1,0 +1,20 @@
+tmp/tmp_get.sbn.sh no se pudo crear archivos_marc21/488-15561-1-8.sbn.18:1.mrc. return code = 0
+===================================================================
+Z> Character set negotiation : utf8
+Z> Connecting...OK.
+Sent initrequest.
+Connection accepted by v3 target.
+ID     : 81
+Name   : Metaproxy/YAZ
+Version: 1.20.0/5.31.1 c3cea881e3e7e80b069ddd1429994e58841acb14
+Options: search present scan namedResultSets
+Elapsed: 0.239721
+Z> Sent searchRequest.
+Target has closed the association.
+Reason: lack of activity, message: NULL
+Sent response.
+Elapsed: 30.078109
+Z> Z> Sent presentRequest (1+1).
+Target closed connection
+Z> See you later, alligator.
+===================================================================
