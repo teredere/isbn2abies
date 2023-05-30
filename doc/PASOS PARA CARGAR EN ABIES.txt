@@ -1,0 +1,97 @@
+1) Exportar pestaña 00 de C:\Users\Usuario\Desktop\DOC ABIE\DATOS-ELABORADOS\PASADA V01\TRABAJADOS\00_COMPENDIO_PARA_CARGAR_V00.xlsx
+   Texto separado por tabuladores
+   
+2) Copiar al directorio de trabajo C:\Users\Usuario\Desktop\DOC ABIE\ISBN
+   00_COMPENDIO_PARA_CARGAR_V00.txt  
+
+3) Pasar fromdos 
+   fromdos 00_COMPENDIO_PARA_CARGAR_V00.txt
+   
+4) CONVERTIR A UTF-8
+   iconv -f LATIN1 -t UTF8 00_COMPENDIO_PARA_CARGAR_V00.txt > 00_COMPENDIO_PARA_CARGAR_V00-utf8.txt
+   
+5) PASAR EL SCRIPT AWK DE FORMATEO
+   awk -v repro=1 -f bin/marc2abies.awk 00_COMPENDIO_PARA_CARGAR_V00-utf8.txt > 00_COMPENDIO_PARA_CARGAR_V00_PROCESADO-utf8.txt
+   Aviso: Columna 1(FROM) no definida para Abies. Se deja tal cual
+   Aviso: Columna 2(IdEjoR) no definida para Abies. Se deja tal cual
+   Aviso: Columna 37(idioma) no definida para Abies. Se deja tal cual
+   Aviso: Columna 38(Notas_1) no definida para Abies. Se deja tal cual
+   Aviso: Columna 39(isbn_buscado) no definida para Abies. Se deja tal cual
+   
+4) CONVERTIR DE VUELTA A LATIN-1 (ISO 8859-1()
+   iconv -f UTF8 -t LATIN1 00_COMPENDIO_PARA_CARGAR_V00_PROCESADO-utf8.txt > 00_COMPENDIO_LISTO_PARA_ABIES.txt
+   
+5) COPIAR LA SALIDA ANTERIOR AL DIRECTORIO DE ABIES
+   00_COMPENDIO_LISTO_PARA_ABIES.txt -->  "C:\Users\Usuario\AppData\Local\VirtualStore\Program Files (x86)\Abies 2" 
+   
+6) COMPROBAR EL VINCULO
+
+   El archivo 0_COMPENDIO_LISTO_PARA_ABIES.txt debe estar vinculado en la base de datos (mediante datos externos).
+   Debe aparecer un objeto con ese nombre (sin la extension .txt). Al abrirlo deben verse los datos generados
+   (hacer una inspección visual).
+   
+  
+7) BORRAR EJEMPLARES Y SELECCIONAR IDIOMA
+   La carga de la table "Ejemplares" se hace por idioma, porque Abies nos hace escoger un país y un idioma para
+   toda la importación.
+   
+   Abrir "Importar.mdb" y ejectutar la consulta "BORRAR Ejemplares". Esto borra todos los registros que hubiese.
+   
+   Modificar la tabla "IDIOMA A IMPORTAR". Teien que tener un único registro con el código de idioma (columna
+   "Idioma" del fichero de entrada.  TO-DO: Generar cvampo Idioma en marc2abies.awk (ahora es manual)
+   
+   PARA ESPAÑOL PONER ESP aunque no esté relleno en el archivo de entrada. Hay una consulta intermedia que lo
+   traduce (00_CON_IDIOMAS).
+   
+   Utilizar la consulta "IDIOMAS" para ver los idiomas y cuantos registros por cada uno de ellos.
+
+8) CARGAR LA TABLA 'Ejemplares".
+
+   Ejecutar la consulta "ANEXAR A  Ejemplares POR IDIOMA"
+   
+9) IMPORTAR en ABIES
+
+   A) Previamente:
+      Hacer una copia de seguridad de Abies.mdb por si algo va mal
+      
+      CON LA EXCEPCION QUE SE INDICA MÁS ADELANTE, 
+        si existe, borrar la tabla Temp.mdb de la carpeta "Abies 2"
+    
+   B) Copiar en el portapapeles la ruta donde está "Importar.mdb"
+   
+   C) Abrir Abies 2
+   
+   D) Seleccionar
+        Archivo > Integrar 
+
+        - Aparece el asistente para integración de datos - Siguiente > 
+            (selección de tarea, primera opción) Siguiente > 
+            (Genérico Abies, opción por defecto) Siguiente >
+            (Escribir la ubicación del archivo (pegar lo copiado en B)  > Siguiente
+            Rellenar nombre de lote y valores por defecto (Libro/Normal/<país que toque>/<Lengua que toque>) > Siguiente
+            
+        - Carga los datos. 
+            Si aparece un error NO SE PUDO COMPLETAR, SE RETORNA A LA SITUACION INICIAL (O ALGO ASÍ)
+                Mirar el ultimo número de registro cargado en la pantalla de carga para depuerar el error
+        
+        - Si todo OK puede aparecer un error de que no se pudo compactar. Aceptar >
+            Procede a la generación de los inversos.
+            
+        - Si aparcece un error de "La tabla está vacía, no se puede continuar la operación solicitada"
+        
+            *******************************************************************************************
+            ** HACER UNA COPIA DE SEGURIDAD DE "Abies 2/Temp.mdb" Y DE "Abies 2/Datos/Abies.mdb      **
+            ** SUSTITUIR "Abies 2/Datos/Abies.mdb" por el archivo "Abies 2/Temp.mdb"                 **
+            ** QUITAR "Abies 2/Temp.mdb" de la carpeta "Abies 2"                                     **
+            ** ABRIR Abies 2. Seleccionar Archivo > Compactar y reparar                              **
+            ** SALIR de Abies, borrar "Abies 2/Temp.mdb" y                                           **               
+            ** REPETIR el proceso desde B)                                                           ** 
+            *******************************************************************************************
+            
+10) GENERAR INVERSOS (ARCHIVO>INVERSOS)
+    Aplica la misma técnica de recuperer temp si casa el proceso y se pierden los datos
+    
+
+   
+   
+   
